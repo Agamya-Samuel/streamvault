@@ -25,7 +25,7 @@ const ShowCard = React.memo(function ShowCard({ show, style }) {
       className="show-card"
       style={style}
       onClick={() => navigate(`/show/${show.id}`)}
-      whileHover={{ scale: 1.05, boxShadow: '0 8px 30px rgba(0,0,0,0.4)' }}
+      whileHover={{ scale: 1.05, zIndex: 10, boxShadow: '0 8px 30px rgba(0,0,0,0.4)' }}
       transition={{ duration: 0.2 }}
     >
       <div className="show-card-image">

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import useNetworkStore, { getNetworkStatus } from '../stores/networkStore';
+import useNetworkStore from '../stores/networkStore';
 
 export default function ConnectionBanner() {
   const realOnline = useNetworkStore((s) => s.realOnline);
@@ -10,22 +10,22 @@ export default function ConnectionBanner() {
     <AnimatePresence>
       {status === 'offline' && (
         <motion.div
-          initial={{ y: -40, opacity: 0 }}
+          initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -40, opacity: 0 }}
+          exit={{ y: 40, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           style={{
             position: 'fixed',
-            top: 12,
-            right: 12,
+            bottom: 24,
+            right: 24,
             zIndex: 9999,
             background: '#ef4444',
             color: '#fff',
-            padding: '8px 16px',
+            padding: '10px 18px',
             borderRadius: 8,
             fontSize: 13,
             fontWeight: 600,
-            boxShadow: '0 2px 12px rgba(0,0,0,0.3)',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
           }}
         >
           Offline — showing cached content
