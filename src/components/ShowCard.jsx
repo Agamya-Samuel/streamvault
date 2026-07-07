@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import useUserDataStore from '../stores/userDataStore';
@@ -8,6 +8,7 @@ const ShowCard = React.memo(function ShowCard({ show, style }) {
   const watchlist = useUserDataStore((s) => s.watchlist);
   const addToWatchlist = useUserDataStore((s) => s.addToWatchlist);
   const removeFromWatchlist = useUserDataStore((s) => s.removeFromWatchlist);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const inWatchlist = watchlist.includes(show.id);
 
@@ -30,12 +31,19 @@ const ShowCard = React.memo(function ShowCard({ show, style }) {
     >
       <div className="show-card-image">
         {show.posterUrl ? (
-          <img
-            src={show.posterUrl}
-            alt={show.primaryTitle}
-            loading="lazy"
-            decoding="async"
-          />
+          <>
+            {/* Shimmer overlay — hidden once image has loaded */}
+            {!imageLoaded && <div className="image-shimmer shimmer" />}
+            <img
+              src={show.posterUrl}
+              alt={show.primaryTitle}
+              loading="lazy"
+              decoding="async"
+              className={imageLoaded ? 'img-loaded' : ''}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)} // hide shimmer even on error
+            />
+          </>
         ) : (
           <div className="show-card-placeholder">
             <span>{show.primaryTitle?.charAt(0) || '?'}</span>
