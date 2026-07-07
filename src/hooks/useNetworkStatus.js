@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import useNetworkStore from '../stores/networkStore';
 
 export default function useNetworkStatus() {
-  const { setRealOnline, toggleMockOffline, mockOffline } = useNetworkStore();
-  const intervalRef = useRef(null);
+  const { setRealOnline, mockOffline } = useNetworkStore();
 
   useEffect(() => {
     const handleOnline = () => setRealOnline(true);
@@ -18,19 +17,8 @@ export default function useNetworkStatus() {
     };
   }, [setRealOnline]);
 
-  useEffect(() => {
-    if (import.meta.env.DEV) {
-      intervalRef.current = setInterval(() => {
-        if (Math.random() < 0.15) {
-          toggleMockOffline();
-        }
-      }, 45000);
-
-      return () => {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-      };
-    }
-  }, [toggleMockOffline]);
+  // Random mock offline toggles in development are disabled to avoid flaky testing.
+  // Developers can simulate offline mode natively via the browser DevTools (Network tab).
 
   return { mockOffline };
 }

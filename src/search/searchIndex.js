@@ -78,7 +78,7 @@ export function search(query) {
   for (const token of tokens) {
     const matches = new Set();
     for (const [key, ids] of titleTokenIndex.entries()) {
-      if (key.startsWith(token) || token.startsWith(key)) {
+      if (key.startsWith(token)) {
         for (const id of ids) matches.add(id);
       }
     }
