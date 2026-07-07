@@ -2,20 +2,37 @@ import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { getAllIndexedShows } from '../search/searchIndex';
+import useCatalogStore from '../stores/catalogStore';
 
 export default function HeroBanner() {
   const navigate = useNavigate();
+  const showsLoaded = useCatalogStore((s) => s.showsLoaded);
 
   const featured = useMemo(() => {
+    if (!showsLoaded) return null;
     const shows = getAllIndexedShows();
     if (shows.length === 0) return null;
     const withRating = shows.filter((s) => s.rating && s.posterUrl);
     if (withRating.length === 0) return shows[0];
     withRating.sort((a, b) => (b.rating || 0) - (a.rating || 0));
     return withRating[Math.floor(Math.random() * Math.min(10, withRating.length))];
-  }, []);
+  }, [showsLoaded]);
 
-  if (!featured) return null;
+  if (!showsLoaded || !featured) {
+    return (
+      <div className="hero-banner loading">
+        <div className="hero-bg">
+          <div className="hero-overlay" />
+        </div>
+        <div className="hero-content" style={{ width: '100%' }}>
+          <div className="skeleton-title shimmer" />
+          <div className="skeleton-meta shimmer" />
+          <div className="skeleton-plot shimmer" />
+          <div className="skeleton-btn shimmer" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
