@@ -42,7 +42,7 @@ export default function Profile() {
   });
 
   return (
-    <Layout>
+    <>
       <div className="profile-page">
         <div className="profile-header">
           <div>
@@ -94,6 +94,6 @@ export default function Profile() {
           )}
         </section>
       </div>
-    </Layout>
+    </>
   );
 }

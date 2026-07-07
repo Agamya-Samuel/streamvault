@@ -7,6 +7,7 @@ import Search from './screens/Search';
 import Profile from './screens/Profile';
 import ShowDetail from './screens/ShowDetail';
 import ProtectedRoute from './components/ProtectedRoute';
+import Layout from './components/Layout';
 import useAuthStore from './stores/authStore';
 import useNetworkStatus from './hooks/useNetworkStatus';
 import useSync from './hooks/useSync';
@@ -23,15 +24,17 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <AnimatePresence mode="wait">
-        <Routes>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-          <Route path="/show/:id" element={<ProtectedRoute><ShowDetail /></ProtectedRoute>} />
-        </Routes>
-      </AnimatePresence>
+      <Layout>
+        <AnimatePresence mode="wait">
+          <Routes>
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/show/:id" element={<ProtectedRoute><ShowDetail /></ProtectedRoute>} />
+          </Routes>
+        </AnimatePresence>
+      </Layout>
     </BrowserRouter>
   );
 }

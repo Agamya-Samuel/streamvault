@@ -52,25 +52,25 @@ export default function ShowDetail() {
 
   if (loading) {
     return (
-      <Layout>
+      <>
         <div className="show-detail-loading">Loading...</div>
-      </Layout>
+      </>
     );
   }
 
   if (!show) {
     return (
-      <Layout>
+      <>
         <div className="show-detail-not-found">
           <h2>Show not found</h2>
           <button onClick={() => navigate('/')} className="back-btn">Back to Home</button>
         </div>
-      </Layout>
+      </>
     );
   }
 
   return (
-    <Layout>
+    <>
       <motion.div
         className="show-detail"
         initial={{ opacity: 0, y: 20 }}
@@ -147,6 +147,6 @@ export default function ShowDetail() {
           </div>
         </div>
       </motion.div>
-    </Layout>
+    </>
   );
 }
