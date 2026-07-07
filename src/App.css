@@ -41,7 +41,7 @@ button {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -50,6 +50,7 @@ button {
   height: 60px;
   background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
   backdrop-filter: blur(4px);
+  box-sizing: border-box;
 }
 
 .nav-brand {
@@ -86,6 +87,13 @@ button {
 .main-content {
   padding-top: 60px;
   min-height: 100vh;
+}
+
+/* ─── Home Page ─── */
+.home-page {
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
 }
 
 /* ─── Loading ─── */
@@ -222,9 +230,41 @@ button {
 /* ─── Hero Banner ─── */
 .hero-banner {
   position: relative;
-  height: 500px;
+  min-height: 500px;
   overflow: hidden;
   cursor: pointer;
+}
+
+.hero-banner.loading {
+  background: var(--bg-secondary);
+  cursor: default;
+}
+
+.skeleton-title {
+  height: 48px;
+  width: 320px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.skeleton-meta {
+  height: 20px;
+  width: 180px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.skeleton-plot {
+  height: 50px;
+  width: 80%;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
+.skeleton-btn {
+  height: 44px;
+  width: 140px;
+  border-radius: 8px;
 }
 
 .hero-bg {
@@ -329,8 +369,10 @@ button {
 
 /* ─── Virtual Grid ─── */
 .virtual-grid-container {
-  height: calc(100vh - 600px);
-  min-height: 400px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .skeleton-grid {
@@ -345,7 +387,8 @@ button {
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .show-card-image {
@@ -466,6 +509,9 @@ button {
 /* ─── Search Page ─── */
 .search-page {
   padding: 24px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .page-title {
@@ -554,6 +600,9 @@ button {
 /* ─── Profile Page ─── */
 .profile-page {
   padding: 24px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .profile-header {
@@ -649,6 +698,9 @@ button {
 /* ─── Show Detail ─── */
 .show-detail {
   padding: 24px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .show-detail-loading,
