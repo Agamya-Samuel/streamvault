@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import useAuthStore from '../stores/authStore';
 
 export default function SignUp() {
@@ -46,7 +46,22 @@ export default function SignUp() {
         </h1>
         <p className="auth-subtitle">{isSignUp ? 'Create an account' : 'Sign in to continue'}</p>
 
-        {error && <div className="auth-error">{error}</div>}
+        <div style={{ height: 42, marginBottom: 16, position: 'relative' }}>
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                className="auth-error"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                style={{ position: 'absolute', width: '100%', boxSizing: 'border-box', margin: 0 }}
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <input
