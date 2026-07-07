@@ -31,7 +31,13 @@ export default function useSync() {
         const currentStatus = getNetworkStatus(useNetworkStore.getState());
         if (currentStatus === 'offline') break;
 
-        const { titles, nextPageToken, totalCount } = await fetchShowsPage(pageToken);
+        let titles, nextPageToken, totalCount;
+        try {
+          ({ titles, nextPageToken, totalCount } = await fetchShowsPage(pageToken));
+        } catch (pageErr) {
+          console.warn('Page fetch failed after retries, stopping sync:', pageErr);
+          break;
+        }
 
         if (titles.length === 0) break;
 
