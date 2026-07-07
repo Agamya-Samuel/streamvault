@@ -6,17 +6,22 @@ import useCatalogStore from '../stores/catalogStore';
 export default function Home() {
   const syncStatus = useCatalogStore((s) => s.syncStatus);
 
-  return (
-    <Layout>
+  const header = (
+    <>
       <HeroBanner />
-      <section className="catalog-section">
+      <div className="catalog-section" style={{ paddingBottom: 0 }}>
         <div className="section-header">
           <h2>Browse Catalog</h2>
           {syncStatus === 'syncing' && <span className="sync-badge">Syncing...</span>}
           {syncStatus === 'cached' && <span className="sync-badge cached">Offline Cache</span>}
         </div>
-        <VirtualGrid />
-      </section>
-    </Layout>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="home-page">
+      <VirtualGrid header={header} />
+    </div>
   );
 }
