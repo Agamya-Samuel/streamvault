@@ -1,6 +1,6 @@
-export default function SkeletonCard({ style }) {
+export default function SkeletonCard() {
   return (
-    <div className="show-card skeleton-card" style={style}>
+    <div className="show-card skeleton-card">
       <div className="show-card-image shimmer" />
       <div className="show-card-info">
         <div className="skeleton-line shimmer" style={{ width: '80%', height: 14 }} />

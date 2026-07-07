@@ -40,6 +40,34 @@ export async function getAllShows() {
   return db.getAll('shows');
 }
 
+/**
+ * Fetch a page of shows from IndexedDB.
+ * @param {number} offset - number of records to skip
+ * @param {number} limit  - max records to return
+ * @returns {Promise<Array>}
+ */
+export async function getShowsPaged(offset, limit) {
+  const db = await getDB();
+  const tx = db.transaction('shows', 'readonly');
+  const store = tx.objectStore('shows');
+  const results = [];
+  let cursor = await store.openCursor();
+  let skipped = 0;
+
+  while (cursor) {
+    if (skipped < offset) {
+      skipped++;
+      cursor = await cursor.continue();
+      continue;
+    }
+    results.push(cursor.value);
+    if (results.length >= limit) break;
+    cursor = await cursor.continue();
+  }
+
+  return results;
+}
+
 export async function getShowById(id) {
   const db = await getDB();
   return db.get('shows', id);
