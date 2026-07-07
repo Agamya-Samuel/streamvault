@@ -1,29 +1,62 @@
 import { create } from 'zustand';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import { auth, googleProvider } from '../lib/firebase';
 
-// Temporarily mock authentication to disable real Firebase auth
 const useAuthStore = create((set) => ({
-  user: { email: 'guest@streamvault.com', uid: 'guest-uid' },
-  loading: false,
+  user: null,
+  loading: true,
   error: null,
 
   signUp: async (email, password) => {
-    set({ user: { email, uid: 'guest-uid' }, error: null });
+    set({ error: null });
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      set({ error: err.message });
+      throw err;
+    }
   },
 
   signIn: async (email, password) => {
-    set({ user: { email, uid: 'guest-uid' }, error: null });
+    set({ error: null });
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      set({ error: err.message });
+      throw err;
+    }
   },
 
   signInWithGoogle: async () => {
-    set({ user: { email: 'google-guest@streamvault.com', uid: 'guest-uid' }, error: null });
+    set({ error: null });
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      set({ error: err.message });
+      throw err;
+    }
   },
 
   signOut: async () => {
-    set({ user: null });
+    try {
+      await signOut(auth);
+      set({ user: null });
+    } catch (err) {
+      set({ error: err.message });
+    }
   },
 
   initListener: () => {
-    return () => {};
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      set({ user, loading: false });
+    });
+    return unsubscribe;
   },
 }));
 
