@@ -91,7 +91,7 @@ button {
 
 /* ─── Home Page ─── */
 .home-page {
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
 }
@@ -375,6 +375,35 @@ button {
   flex-direction: column;
 }
 
+/* Natural-scroll wrapper used by the new VirtualGrid */
+.virtual-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* CSS grid that replaces react-window */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px 16px;
+  padding: 0 32px 40px;
+}
+
+/* IntersectionObserver sentinel */
+.scroll-sentinel {
+  height: 1px;
+  width: 100%;
+}
+
+/* End-of-list label */
+.end-of-list {
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+
 .skeleton-grid {
   display: flex;
   flex-wrap: wrap;
@@ -404,6 +433,21 @@ button {
   height: 100%;
   object-fit: cover;
   display: block;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.show-card-image img.img-loaded {
+  opacity: 1;
+}
+
+/* Shimmer overlay while image is loading */
+.image-shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
 }
 
 .show-card-placeholder {
